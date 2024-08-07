@@ -8,6 +8,7 @@ package pueba2;
  *
  * @author Balto
  */
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -17,6 +18,7 @@ import java.io.OutputStream;
 import java.io.PrintStream;
 
 public class Main extends JFrame {
+
     private PalindromoAir avion;
     private JTextArea displayArea;
 
@@ -35,6 +37,8 @@ public class Main extends JFrame {
         controlPanel.setLayout(new GridLayout(5, 1));
 
         JButton sellTicketButton = new JButton("Vender Ticket");
+        sellTicketButton.setBackground(Color.BLUE);
+        sellTicketButton.setForeground(Color.WHITE);
         sellTicketButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String name = JOptionPane.showInputDialog("Ingrese el nombre del pasajero:");
@@ -42,7 +46,6 @@ public class Main extends JFrame {
                     avion.sellTicket(name.trim());
                     updateDisplay();
                 } else {
-                    
                     JOptionPane.showMessageDialog(null, "Nombre inválido.");
                 }
             }
@@ -50,6 +53,8 @@ public class Main extends JFrame {
         controlPanel.add(sellTicketButton);
 
         JButton cancelTicketButton = new JButton("Cancelar Ticket");
+        cancelTicketButton.setBackground(Color.RED);
+        cancelTicketButton.setForeground(Color.WHITE);
         cancelTicketButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String name = JOptionPane.showInputDialog("Ingrese el nombre del pasajero a cancelar:");
@@ -69,28 +74,26 @@ public class Main extends JFrame {
         controlPanel.add(cancelTicketButton);
 
         JButton dispatchButton = new JButton("Despachar Avión");
+        dispatchButton.setBackground(Color.YELLOW);
+        dispatchButton.setForeground(Color.BLACK);
         dispatchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 double totalIncome = avion.income();
-                JOptionPane.showMessageDialog(null, "Ingresos totales: $" + totalIncome);
-                avion.dispatch();
-                updateDisplay();
-                
+                if (totalIncome > 0) {
+                    JOptionPane.showMessageDialog(null, "Ingresos totales: $" + totalIncome);
+                    avion.dispatch();
+                    updateDisplay();
+                } else {
+                    JOptionPane.showMessageDialog(null, "No hay boletos vendidos.");
+                }
             }
         });
         controlPanel.add(dispatchButton);
 
-        JButton showIncomeButton = new JButton("Mostrar Ingresos Totales");
-        showIncomeButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-              //  double totalIncome = avion.income();
-
-            }
-        });
-        controlPanel.add(showIncomeButton); 
-
         displayArea = new JTextArea();
         displayArea.setEditable(false);
+        displayArea.setBackground(Color.BLACK);
+        displayArea.setForeground(Color.WHITE);
         JScrollPane scrollPane = new JScrollPane(displayArea);
 
         add(controlPanel, BorderLayout.WEST);
@@ -110,7 +113,7 @@ public class Main extends JFrame {
     }
 
     public static void main(String[] args) {
-        new Main();
+      new Main();
     }
 }
 
